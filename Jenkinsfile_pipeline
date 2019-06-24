@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    tools {
+        maven 'MAVEN'
+        jdk 'local'
+    }
+    stages {
+        stage(clone){
+            steps{
+                git branch: 'master', url: "https://github.com/swapnildt/jxisawesome.git"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'maven clean'
+                //ABC indicates the folder name where the pom.xml file resides
+                sh ' mvn -f pom.xml clean package'
+            }
+            post {
+                success {
+                    echo 'Now Archiving'
+                }
+                }
+              }
+        stage('Copy Archive') {
+         steps {
+             script {
+                 step ([$class: 'CopyArtifact',
+                 projectName: 'equalexpert',
+                 filter: "target/*.jar",
+                 target: '/mnt/artifact']);
+             }
+         }
+     }
+
+    }
+}
