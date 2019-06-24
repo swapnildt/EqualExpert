@@ -1,0 +1,7 @@
+
+---
+hosts: all
+sudo: yes
+tasks:
+  - name: Copy the file from Jenkins server to apache server
+    copy: src=/var/lib/jenkins/workspace/mav_pro1/target/*.jar dest=/mnt/artifact

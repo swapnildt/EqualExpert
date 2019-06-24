@@ -1,0 +1,24 @@
+- name: Accept Java 8 License
+   become: yes
+   debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+ - name: Install Oracle Java 8
+   become: yes
+   apt: name{{item}} state=latest
+   with_items:
+     - oracle-java8-installer
+     - ca-certificates
+     - oracle-java8-set-default
+ - name: Create Folder
+   file:
+    path: /home/ubuntu/tomcat
+    state: directory
+    mode: 0755
+    owner: ubuntu
+    group: ubuntu
+ - name: Download Tomcat
+   get_url: url=https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.27/bin/apache-tomcat-8.0.27.tar.gz dest=/home/ubuntu/tomcat
+ - name: Extract Archive
+   unarchive: src=/home/ubuntu/tomcat/apache-tomcat-8.0.27.tar.gz dest=/home/ubuntu/tomcat
+ - name: Start apache-tomcat-8.0.27
+   shell: /home/ubuntu/tomcat/apache-tomcat-8.0.27/bin/startup.sh
+ - name: Copy
