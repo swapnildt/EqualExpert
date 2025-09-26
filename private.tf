@@ -58,7 +58,8 @@ resource "aws_instance" "db-1" {
     source_dest_check = false
 
     tags {
-        Name = "TomcatServer"
+        Name = "TomcatServer",
+        ApplicationName = "Core Money"
     }
 }
 
