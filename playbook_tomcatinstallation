@@ -8,7 +8,7 @@
      - oracle-java8-installer
      - ca-certificates
      - oracle-java8-set-default
- - name: Create Folder
+ - name: Create Folder for tomcat
    file:
     path: /home/ubuntu/tomcat
     state: directory
